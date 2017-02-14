@@ -1,3 +1,5 @@
+'use strict';
+
 import Orders from 'components/Orders/Orders.vue'
 
 const orders = {

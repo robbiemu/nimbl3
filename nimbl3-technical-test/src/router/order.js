@@ -1,3 +1,5 @@
+'use strict';
+
 import Order from 'components/Orders/Order.vue'
 
 export const neworder = {
