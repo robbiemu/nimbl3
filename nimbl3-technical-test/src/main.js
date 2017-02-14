@@ -3,6 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Touch from 'vue-touch'
+
+Vue.use(Touch)
 
 /* eslint-disable no-new */
 new Vue({
