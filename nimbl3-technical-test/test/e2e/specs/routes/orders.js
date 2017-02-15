@@ -7,7 +7,7 @@ module.exports = {
 
     browser
       .url(devServer + '/orders')
-      .waitForElementVisible('#orders', 5000)
+      .waitForElementVisible('body', 5000)
       .assert.containsText('#orders', 'Orders')
       .end()
   }

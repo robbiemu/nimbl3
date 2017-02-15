@@ -12,10 +12,9 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "normalize.css": "^5.0.0",
     "vue": "^2.1.10",
     "vue-router": "^2.2.0",
-    "vue-side-nav": "^2.0.0",
-    "vue-touch": "git://github.com/vuejs/vue-touch.git#next",
     "vuex": "^2.1.2"
   },
   "devDependencies": {

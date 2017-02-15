@@ -7,10 +7,10 @@ module.exports = {
 
     browser
       .url(devServer + '/order/new')
-      .waitForElementVisible('#order', 5000)
+      .waitForElementVisible('body', 5000)
       .assert.containsText('#new-order', 'New Order')
       .url(devServer + '/order/1')
-      .waitForElementVisible('#order', 5000)
+      .waitForElementVisible('body', 5000)
       .assert.containsText('#show-order', 'Order 1')
       .end()
   }
