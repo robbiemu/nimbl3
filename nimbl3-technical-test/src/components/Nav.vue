@@ -3,19 +3,23 @@
   <nav id="sidebar">
     <div @click="toggle" class="navbar-brand"><img :src="logo" /></div>
     <ul>
-      <li class="btn">Dashboard</li>
-      <li class="btn">Orders</li>
-      <li class="btn">Companies</li>
-      <li class="btn">Products</li>
-      <li class="btn">Documents</li>
-      <li class="btn">Pricing</li>
-      <li class="btn">Brands</li>
-      <li class="btn">Settings</li>
-      <li class="btn">Reports</li>
-      <li class="btn">Account Users</li>
+      <router-link v-for="route in Object.keys(activeRoutes)"
+          :to="{ name: properNoun(route) }"
+          tag="li"
+          class="btn" active-class="active-route"
+          @mouseover.native="highlightedRoutes[route]=true"
+          @mouseleave.native="highlightedRoutes[route]=false">
+        <div class="route-icon-container">
+          <img class="route-icon" :src="routeResources[route].active" v-if="activeRoutes[route] || highlightedRoutes[route]" />
+          <img class="route-icon" :src="routeResources[route].inactive" v-else />
+        </div>
+        <div class="proper-noun">{{route}}</div>
+      </router-link>
       <li></li>
     </ul>
     <div id="nav-footer" class="bottom">
+      <!-- the following asset downloaded from the project source does not match the sample
+      <img :src="poweredby" />-->
       <div class="row">
         <div class="centered">POWERED BY</div>
       </div>
@@ -29,16 +33,36 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
+import routeResources from './routeResources'
+import activeRoutes from './activeRoutes'
+const highlightedRoutes = Object.assign({}, activeRoutes)
+
+const properNoun = (noun) => noun.charAt(0).toUpperCase() + noun.slice(1)
+
 export default {
   data () {
     return {
       nav: true,
-      logo: require('../assets/icons/logo-white.svg')
+      logo: require('../assets/icons/logo-white.svg'),
+      activeRoutes,
+      highlightedRoutes,
+      /* TODO - the following asset downloaded from the project source does not match the sample
+      poweredby: require('../assets/icons/poweredby.svg')*/
+      routeResources
+    }
+  },
+  watch: {
+    '$route.name': function () {
+      Object.keys(this.activeRoutes)
+        .map(r => this.activeRoutes[r] = properNoun(r) === this.$route.name? true: false)
     }
   },
   methods: {
-    slide(dir) {
-      console.dir('slide ' + dir)
+    properNoun,
+    /* the follow are methods for navigation slide animation */
+    slide (dir) {
       const el = document.getElementById('sidebar')
       const opp = dir === 'in'? 'out' : 'in'
 
@@ -54,10 +78,9 @@ export default {
         document.getElementById('overbar').classList.toggle('show')
       }, 250)
     },
-    slideIn(){ this.slide('in') },
-    slideOut(){ this.slide('out') },
-    toggle(){
-      console.log(this.nav)
+    slideIn () { this.slide('in') },
+    slideOut () { this.slide('out') },
+    toggle () {
       const dir = this.nav? 'out' : 'in'
       this.slide(dir)
       this.nav = !this.nav
@@ -66,99 +89,8 @@ export default {
 }
 </script>
 
-<style scoped>
-#nav {
-  font-weight: 600;
-  color: #D18EE2;
-}
-
-.btn, .navbar-brand {
-  cursor: pointer;
-  user-select: none;
-}
-
-#nav-footer{
-  padding: 1px;
-  width: 100%;
-  cursor: default;
-  user-select: none;
-}
-
-#nav-footer > .row {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  padding: 1px;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 26px;
-  letter-spacing: 1px;
-}
-#nav-footer img {
-  width: 113px;
-  height: auto;
-  margin-bottom: 22px;
-}
-
-#overbar .navbar-brand {
-  padding: 7.375px 0;
-}
-#sidebar .navbar-brand {
-  padding: 15.375px 0;
-  background-color: #4C1367;
-}
-
-#sidebar ul { flex-grow: 1 }
-
-#sidebar li:hover {
-  background-color: rgba(76,19,103,0.5);
-  color: white;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-li {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 34px;
-  padding: 16.546px 0;
-}
-
-#sidebar, #overbar {
-  background-color: #702283;
-}
-
-#sidebar {
-  display: flex;
-  flex-direction: column;
-  min-height: 100Vh;
-  width: 15vw;
-  min-width: 246px;
-  position: absolute;
-  top: 0;
-  z-index: 1000;
-}
-
-#overbar {
-  position: fixed;
-  top: 0;
-  z-index: 1000;
-  width: 100vw;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  display: none;
-}
-#overbar.show {
-  display: flex;
-}
-
-#overbar > * {
-  margin-left: 1rem;
-}
+<style lang="scss" scoped>
+@import 'static/styles/nav.scss';
 
 #sidebar.slide-in {
   animation-name: SlideIn;

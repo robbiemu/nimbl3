@@ -1,0 +1,114 @@
+#nav {
+  font-weight: 600;
+  color: #D18EE2;
+}
+
+.btn, .navbar-brand {
+  cursor: pointer;
+  user-select: none;
+}
+
+#sidebar .btn {
+  display: flex;
+}
+
+div.route-icon-container {
+  padding-top: 2.25px;
+  left: 30px;
+  position: absolute;
+}
+.route-icon {
+  max-width: 17px;
+  max-height: 17px;
+}
+div.route-icon-container + div {
+  margin-left: 68px;
+}
+
+#nav-footer{
+  padding: 1px;
+  width: 100%;
+  cursor: default;
+  user-select: none;
+}
+
+#nav-footer > .row {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding: 1px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 26px;
+  letter-spacing: 1px;
+}
+#nav-footer img {
+  width: 113px;
+  height: auto;
+  margin-bottom: 22px;
+}
+
+#overbar .navbar-brand {
+  padding: 7.375px 0;
+}
+#sidebar .navbar-brand {
+  padding: 15.375px 0;
+  background-color: #4C1367;
+}
+
+#sidebar ul { flex-grow: 1 }
+
+#sidebar li:hover {
+  background-color: rgba(76,19,103,0.5);
+  color: white;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 34px;
+  padding: 16.546px 0;
+}
+
+li.active-route {
+  color: white;
+  background-color: rgba(76,19,103,0.5)
+}
+
+#sidebar, #overbar {
+  background-color: #702283;
+}
+
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 100Vh;
+  width: 15vw;
+  min-width: 246px;
+  position: absolute;
+  top: 0;
+  z-index: 1000;
+}
+
+#overbar {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100vw;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  display: none;
+}
+#overbar.show {
+  display: flex;
+}
+
+#overbar > * {
+  margin-left: 1rem;
+}

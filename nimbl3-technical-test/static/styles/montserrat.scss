@@ -1,0 +1,15 @@
+$weights: 100,200,300,400,500,600,700,800;
+$formats: 'opentype','opentype','opentype','truetype',
+  'opentype','truetype','opentype','opentype';
+$fonts: 'Montserrat-Hairline.otf','Montserrat-UltraLight.otf','Montserrat-Light.otf',
+  'Montserrat-Regular.ttf','Montserrat-SemiBold.otf','Montserrat-Bold.ttf',
+  'Montserrat-ExtraBold.otf','Montserrat-Black.otf';
+
+@mixin getMontserrat($weight) {
+  $i: index($weights, $weight);
+  @font-face {
+    font-family: "Montserrat";
+    src: url("../static/fonts/" + nth($fonts, $i)) format(nth($formats, $i));
+    font-weight: $weight;
+  }
+}

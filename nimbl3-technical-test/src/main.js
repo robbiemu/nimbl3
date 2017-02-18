@@ -8,7 +8,6 @@ require('../node_modules/normalize.css/normalize.css')
 import App from './App'
 import router from './router'
 
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

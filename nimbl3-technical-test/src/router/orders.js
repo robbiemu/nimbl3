@@ -1,11 +1,11 @@
 'use strict';
 
-import Orders from 'components/Orders/Orders.vue'
+import {load} from './separate_routes'
 
 const orders = {
   path: '/orders',
   name: 'Orders',
-  component: Orders
+  component: load('Orders/Orders')
 }
 
 export default orders
