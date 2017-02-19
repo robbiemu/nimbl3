@@ -7,11 +7,13 @@ require('../node_modules/normalize.css/normalize.css')
 
 import App from './App'
 import router from './router'
+import store from './store'
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

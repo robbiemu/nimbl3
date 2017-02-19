@@ -33,8 +33,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
 import routeResources from './routeResources'
 import activeRoutes from './activeRoutes'
 const highlightedRoutes = Object.assign({}, activeRoutes)

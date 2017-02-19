@@ -1,0 +1,43 @@
+$paper: #f8f8f8;
+$white: #fff;
+$shadow: #c9c9c9;
+$text: #89a;
+
+li {
+  background-color: $white;
+  display: flex;
+  height: 64px;
+  list-style: none;
+  width: 1085px;
+}
+
+.orders {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  left: 37px;
+  border-radius: 3px;
+  border: solid thin $shadow;
+
+  .top {
+    .column {
+      text-transform: uppercase;
+    }
+  }
+
+  .order:nth-child(even) {
+    background-color: $paper;
+  }
+
+  .order {
+    box-shadow: 0 -1px 0 0 $shadow;
+
+    :nth-child(1) { position: absolute; left: 1.46%; }
+    :nth-child(2) { position: absolute; left: 14.3%; max-width: 191px; }
+    :nth-child(2+n) { position: relative;}
+
+    .discount::after {
+      content: '%';
+    }
+  }
+}

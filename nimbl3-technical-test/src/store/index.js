@@ -11,3 +11,5 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   modules: {products, orders}
 })
+
+export default store
