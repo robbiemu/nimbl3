@@ -22,9 +22,9 @@ export default {
 
 @include getMontserrat(600);
 @include getMontserrat(400);
+@include getMontserrat(300);
 
 #app {
-  margin-top: 60px;
   text-align: center;
   font-family: Montserrat;
   font-size: 12px;
@@ -32,5 +32,32 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+
+  .component.routeable {
+    margin-top: 15px;
+    animation-name: ComponentSlideOut;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+
+    &.nav {
+      animation-name: ComponentSlideIn;
+      animation-duration: 0.1s;
+      animation-fill-mode: forwards;
+      animation-iteration-count: 1;
+      animation-timing-function: ease-in;
+      margin-top: $overbar-height + 15px;
+    }
+  }
+
+  @keyframes ComponentSlideIn {
+    from { margin-left: $sidebar-width + 15px }
+    to   { margin-left: 15px }
+  }
+  @keyframes ComponentSlideOut {
+    from { margin-left: 15px }
+    to   { margin-left: $sidebar-width + 15px }
+  }
 }
 </style>

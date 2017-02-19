@@ -1,24 +1,24 @@
 <template>
   <div id="orders" class="component routeable">
     Orders
-    {{orders}}
     <ul class="orders">
       <li class="top">
-        <div class="column sku">SKU</div>
-        <div class="column description">Description</div>
-        <div class="column brand">Brand</div>
-        <div class="column list-price">List Price</div>
-        <div class="column discount">Discount</div>
-        <div class="column quantity">Quantity</div>
+        <div class="column orderid">Order Id</div>
+        <div class="column name">Name</div>
+        <div class="column telephone">Telephone</div>
+        <div class="column address">Address</div>
+        <div class="column creator">Creator</div>
+        <div class="column status">Status</div>
       </li>
-      <li class="order" v-for="order in orders">
-        <div class="sku">{{order.sku}}</div>
-        <div class="description">{{order.description}}</div>
-        <div class="brand">{{order.brand}}</div>
-        <div class="list-price">{{order['list price']}}</div>
-        <div class="discount">{{order.discount}}</div>
-        <div class="quantity">{{order.quantity}}</div>
-      </li>
+      <router-link tag="li" class="order" v-for="order in orders"
+          :to="{name: 'Order', params: {id: order.orderid}}">
+        <div class="orderid">{{order.orderid}}</div>
+        <div class="name">{{order.name}}</div>
+        <div class="telephone">{{order.telephone}}</div>
+        <div class="address">{{order.address}}</div>
+        <div class="creator">{{order.creator}}</div>
+        <div class="status">{{order.status}}</div>
+      </router-link>
     </ul>
   </div>
 </template>
@@ -32,5 +32,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'static/styles/order.scss';
+@import 'static/styles/orders.scss';
 </style>

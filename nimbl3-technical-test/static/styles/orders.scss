@@ -1,0 +1,64 @@
+$paper: #f8f8f8;
+$white: #fff;
+$shadow: #c9c9c9;
+$text: #89a;
+$dark-text: #626272;
+
+$lined-shadow: 0 -1px 0 0 $shadow;
+
+#orders {padding-right: 15px;}
+
+li {
+  background-color: $white;
+  color: $text;
+  display: flex;
+  height: 64px;
+  justify-content: space-around;
+  list-style: none;
+  min-width: 1085px;
+
+  div {
+    align-items: center;
+    display: flex;
+    width: 15%;
+  }
+}
+
+.orders {
+  border: solid thin $shadow;
+  border-radius: 3px;
+  left: 37px;
+  margin: 0;
+  padding: 0;
+
+  .top {
+    color: $dark-text;
+
+    .column {
+      justify-content: center;
+      text-transform: uppercase;
+    }
+  }
+
+  .order:nth-child(even) {
+    background-color: $paper;
+  }
+
+  .order {
+    box-shadow: $lined-shadow;
+    cursor: pointer;
+
+    &:hover {
+      border: solid thin $shadow;
+
+    }
+
+    .name {
+      color: $dark-text;
+    }
+
+    div {
+      text-align: left;
+    }
+  }
+}

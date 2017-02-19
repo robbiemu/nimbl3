@@ -1,3 +1,5 @@
+@import './global.scss';
+
 $dark-purple: #4c1367;
 $dark-purple-tint: rgba(76, 19, 103, .5);
 $mid-dark-purple: #702283;
@@ -12,16 +14,19 @@ $highlight-background: #d18ee2;
 #sidebar,
 #overbar {
   background-color: $mid-dark-purple;
+  display: none;
+
+  &.show {
+    display: flex;
+  }
 }
 
 #sidebar {
-  display: flex;
   flex-direction: column;
   min-height: 100vh;
-  min-width: 246px;
   position: absolute;
   top: 0;
-  width: 15vw;
+  width: $sidebar-width;
   z-index: 1000;
 
   .btn {
@@ -30,7 +35,7 @@ $highlight-background: #d18ee2;
 
   ul { flex-grow: 1 }
 
-  .navbar-brand {
+  .sidebar-brand {
     background-color: $dark-purple;
     padding: 15.375px 0;
   }
@@ -66,17 +71,12 @@ $highlight-background: #d18ee2;
 }
 
 #overbar {
-  display: none;
   padding-bottom: .5rem;
   padding-top: .5rem;
   position: fixed;
   top: 0;
   width: 100vw;
   z-index: 1000;
-
-  &.show {
-    display: flex;
-  }
 
   > * {
     margin-left: 1rem;

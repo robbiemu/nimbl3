@@ -1,16 +1,19 @@
 <template>
   <div class="component" id="nav">
   <nav id="sidebar">
-    <div @click="toggle" class="navbar-brand"><img :src="logo" /></div>
+    <div @click="toggle" class="sidebar-brand"><img :src="logo" /></div>
     <ul>
       <router-link v-for="route in Object.keys(activeRoutes)"
           :to="{ name: properNoun(route) }"
           tag="li"
-          class="btn" active-class="active-route"
+          class="btn"
+          :class="'route-'+route.replace(' ','-')"
+          active-class="active-route"
           @mouseover.native="highlightedRoutes[route]=true"
           @mouseleave.native="highlightedRoutes[route]=false">
         <div class="route-icon-container">
-          <img class="route-icon" :src="routeResources[route].active" v-if="activeRoutes[route] || highlightedRoutes[route]" />
+          <img class="route-icon" :src="routeResources[route].active"
+            v-if="activeRoutes[route] || highlightedRoutes[route]" />
           <img class="route-icon" :src="routeResources[route].inactive" v-else />
         </div>
         <div class="proper-noun">{{route}}</div>
@@ -54,8 +57,18 @@ export default {
   watch: {
     '$route.name': function () {
       Object.keys(this.activeRoutes)
-        .map(r => this.activeRoutes[r] = properNoun(r) === this.$route.name? true: false)
+        .map(r => this.activeRoutes[r] = properNoun(r) === this.$route.name ?
+            true : false
+        )
+      if (this.$route.name === 'Order')
+                  this.activeRoutes['orders'] = true
+
     }
+  },
+  updated () {
+    if (this.$route.name === 'Order')
+      document.querySelector('.route-orders').classList
+        .toggle('active-route')
   },
   methods: {
     properNoun,
@@ -74,6 +87,10 @@ export default {
 
       setTimeout(function () {
         document.getElementById('overbar').classList.toggle('show')
+        document.getElementById('sidebar').classList.toggle('show')
+        let component = document.querySelector('.component.routeable')
+        if(component)
+          component.classList.toggle('nav')
       }, 250)
     },
     slideIn () { this.slide('in') },
@@ -83,6 +100,9 @@ export default {
       this.slide(dir)
       this.nav = !this.nav
     }
+  },
+  mounted () {
+    document.getElementById('sidebar').classList.add('show')
   }
 }
 </script>
