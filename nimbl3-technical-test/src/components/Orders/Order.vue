@@ -57,9 +57,12 @@
           </svg>
           <!-- TODO - missing animated SVG asset -->
           <input type="text"
-            @keyup="maskItems($event)" @change="searchState = $event.target.value?true:false" />
+            @keyup="maskItems($event)" @change="search($event)" />
         </li>
-        <li class="line-item" v-for="lineItem in order.lineItems" v-if="willRender(lineItem)">
+        <li class="line-item" v-for="(lineItem, index) in order.lineItems"
+            :class="{floater: willFloat(lineItem)}"
+            :data-natural-order="index"
+            :data-order="willFloat(lineItem)? index : 1000+index">
           <div class="sku">{{lineItem.sku}}</div>
           <div class="description">{{lineItem.description}}</div>
           <div class="brand">{{lineItem.brand}}</div>
@@ -87,7 +90,9 @@
     <div class="floater summary box col-md-3 col-md-offset-8">
       <div class="form-group">
         <label for="delivery">Estimated Delivery Date</label>
+
         <input type="text" class="form-control" id="delivery" v-model="order['estimated delivery date']" />
+
       </div>
       <hr />
       <div>
@@ -158,8 +163,29 @@ export default {
     }
   },
   methods: {
+    maskItems (event) {
+      this.itemsFilter = event.target.value
+      this.searchState = this.searchStates['processing']
+      const self = this
+      window.clearTimeout(this.searchTyping)
+      this.searchTyping = setTimeout(function() {
+        self.searchState = self.itemsFilter ?
+          self.searchStates['during'] : self.searchStates['start']
+          self.sortLineItems()
+      }, 500)
+    },
+    search (event) {
+      this.searchState = event.target.value?true:false
+      this.sortLineItems()
+    },
+    sortLineItems (sort='order') {
+      const ul = document.querySelector('.line-items')
+      Array.from(document.querySelectorAll('.line-items .line-item'))
+        .sort((a, b) => Number.parseInt(a.getAttribute('data-'+sort)) >
+          Number.parseInt(b.getAttribute('data-'+sort)))
+        .forEach(e => ul.appendChild(e))
+    },
     update () {
-      console.log(this.order)
       this.$store.dispatch('UPDATE ORDER', Vue.util.extend({}, this.order))
     },
     removeItem (id) {
@@ -171,21 +197,10 @@ export default {
       const copy = Vue.util.extend({}, this[where])
       copy[node] = !copy[node]
       Vue.set(this, where, copy)
-      console.log(this[where][node])
     },
-    maskItems (event) {
-      this.itemsFilter = event.target.value
-      this.searchState = this.searchStates['processing']
-      const self = this
-      window.clearTimeout(this.searchTyping)
-      this.searchTyping = setTimeout(function() {
-        self.searchState = self.itemsFilter ?
-          self.searchStates['during'] : self.searchStates['start']
-      }, 1000)
-    },
-    willRender (lineItem) {
+    willFloat (lineItem) {
       if(!this.itemsFilter)
-        return true
+        return false
       const regex = new RegExp(this.itemsFilter.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"))
       return Object.keys(lineItem).some(k => regex.test(lineItem[k]))
     },
@@ -202,6 +217,7 @@ export default {
       document.querySelector('.control.search > input').value=''
       this.searchState = this.searchStates['start']
       this.itemsFilter = undefined
+      this.sortLineItems('natural-order')
     }
   },
   mounted () {

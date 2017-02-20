@@ -91,14 +91,18 @@ h4 {
 }
 
 .floater {
+  position: relative;
   z-index: 3;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+}
+li:not(.floater) {
+  z-index: 0;
 }
 
 .summary {
   padding: 15px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 
   > div {
     display: flex;
@@ -252,7 +256,6 @@ li {
   margin: 0;
   padding: 0;
   position: relative;
-  z-index: 1;
 
   .top {
     color: $dark-text;

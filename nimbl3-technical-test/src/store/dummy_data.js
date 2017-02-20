@@ -139,7 +139,7 @@ Order['default values'] = (k) => {
     case 'status':
       return statuses[getRandomInt(0,4)]
     case 'estimated delivery date':
-      return `${getRandomInt(1,28)} ${getRandomInt(1,12)} 2017`
+      return `${getRandomInt(1,28)}-${getRandomInt(1,12)}-${2017+getRandomInt(1,0)}`
     case 'shipping':
       return 0
     case 'special discount':
@@ -157,4 +157,5 @@ Order['default values'] = (k) => {
 }
 
 export const orders = [new Order(), new Order(), new Order()]
+console.log(orders)
 export const people = Array.from(names)
