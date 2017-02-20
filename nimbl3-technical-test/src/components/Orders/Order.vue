@@ -106,7 +106,7 @@ export default {
   computed: {
     ...mapState(['people', 'types', 'statuses']),
     order: function() {
-      return this.$store.state.orders.orders.find(o => o.orderid === this.id)
+      return Vue.util.extend({}, this.$store.state.orders.orders.find(o => o.orderid === this.id))
     }
   },
   methods: {
@@ -145,7 +145,7 @@ export default {
       const rect = document.querySelector('.clear-search').getBoundingClientRect()
 
       if(e.pageX - rect.left > rect.right-rect.left ||
-        e.pageY - rect.top > rect.bottom-rect.top) 
+        e.pageY - rect.top > rect.bottom-rect.top)
         return
 
       document.querySelector('.control.search > input').value=''
