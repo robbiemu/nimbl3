@@ -1,0 +1,55 @@
+@import './orderGlobal';
+
+.toprow,
+.actions,
+.order {
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions {
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.order {
+  // TODO - specifications for line-heights do not match rendered output.
+  // Need artist to reposition lines of text properly or give new line-heights.
+  // As a work-around, using the > div rule below.
+
+  color: $middle;
+  font-size: 12px;
+  line-height: 15px;
+  min-width: 1085px - 256px;
+  padding: 12px;
+  text-align: left;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    + div {
+      margin-left: 15px;
+    }
+  }
+
+  .name {
+    color: $dark-text;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 19px;
+  }
+
+  .telephone {
+    font-weight: 600;
+  }
+
+  h3 {
+    color: $dark-text;
+    font-size: 11px;
+    line-height: 14px;
+    margin: 0;
+    text-align: center;
+  }
+}

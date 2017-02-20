@@ -1,0 +1,72 @@
+@import './orderGlobal';
+
+.estimate {
+  color: $middle;
+  cursor: pointer;
+  font-size: 11px;
+  height: 251px;
+  line-height: 14px;
+  margin-bottom: 20px;
+  padding: 15px;
+  width: 293px;
+
+  &.floater {
+    bottom: 20px;
+    position: fixed;
+    right: 20px;
+  }
+
+  > * {
+    cursor: default;
+    margin: 8px;
+  }
+
+  div {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    :first-child {
+      margin-right: 15px;
+    }
+  }
+
+  .subtotal-label,
+  label {
+    color: $dark-text;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 14px;
+  }
+}
+
+.total-label {
+  color: $dark-text;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 18px;
+}
+
+hr {
+  border-bottom: solid thin $hr;
+}
+
+.total {
+  color: $dark-text;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 22px;
+}
+
+input {
+  color: $middle;
+  font-size: 11px;
+  height: 28px;
+  line-height: 14px;
+  text-align: center;
+  width: 81px;
+
+  &#tax {
+    width: 54px; // off-spec because of spinners
+  }
+}

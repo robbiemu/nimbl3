@@ -156,6 +156,6 @@ Order['default values'] = (k) => {
   }
 }
 
-export const orders = [new Order(), new Order(), new Order()]
-console.log(orders)
+/* export const orders = [...Array(500)].map(() => new Order()) // about 3MB */
+export const orders = [...Array(getRandomInt(1,10))].map(() => new Order())
 export const people = Array.from(names)

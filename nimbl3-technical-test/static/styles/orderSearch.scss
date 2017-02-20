@@ -1,0 +1,29 @@
+@import './orderGlobal';
+
+.control.search {
+  max-height: (2px * (64 / 3));
+
+  img,
+  svg {
+    // TODO -  I'm sure there's a more elegant solution to this, but I'm out of time
+    margin-left: (((2px * (64 / 3)) - (2px * (64 / 8))) / 2);
+    width: (2px * (64 / 8));
+    z-index: 2;
+  }
+
+  input {
+    border: 0;
+    border-bottom: solid thin $shadow;
+    font-size: 12px;
+    line-height: 12px;
+    // TODO -  I'm sure there's a more elegant solution to this, but I'm out of time
+    margin-left: ((-2px * (64 / 8)) + (-1 * (((2px * (64 / 3)) - (2px * (64 / 8))) / 2)));
+    padding-left: ((2px * (64 / 8)) + (2 * (((2px * (64 / 3)) - (2px * (64 / 8))) / 2)));
+    width: 100%;
+    z-index: 1;
+  }
+}
+
+.clear-search {
+  cursor: pointer;
+}

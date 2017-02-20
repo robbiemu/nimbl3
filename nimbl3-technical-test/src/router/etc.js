@@ -45,5 +45,10 @@ const accountUsers = {
   name: 'Account users',
   component: Dummy
 }
+const home = {
+  path: '/',
+  name: 'Home',
+  component: Dummy
+}
 
-export default [ dashboard, companies, products, documents, pricing, brands, settings, reports, accountUsers ]
+export default [ dashboard, companies, products, documents, pricing, brands, settings, reports, accountUsers, home ]
