@@ -27,6 +27,7 @@ $highlight-background: #d18ee2;
 #sidebar {
   flex-direction: column;
   flex-grow: 1;
+  min-height: 100%;
   position: absolute;
   top: 0;
   width: $sidebar-width;

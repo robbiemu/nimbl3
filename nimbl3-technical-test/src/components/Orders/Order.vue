@@ -84,6 +84,35 @@
       <div class="remarks box">{{order.remarks}}</div>
     </div>
 
+    <div class="floater summary box col-md-3 col-md-offset-8">
+      <div class="form-group">
+        <label for="delivery">Estimated Delivery Date</label>
+        <input type="text" class="form-control" id="delivery" v-model="order['estimated delivery date']" />
+      </div>
+      <hr />
+      <div>
+        <div class="pull-left">Subtotal</div>
+        <div class="subtotal pull-right">{{subTotal|currency}}</div>
+      </div>
+      <div class="form-group">
+        <label for="shipping">Shipping</label>
+        <input type="number" class="form-control" id="shipping" v-model="order.shipping" />
+      </div>
+      <div class="form-group">
+        <label for="discount">Special Discount</label>
+        <input type="number" class="form-control" id="discount" v-model="order['special discount']" />
+      </div>
+      <div class="form-group">
+        <label for="tax">Tax</label>
+        <div><input type="number" class="form-control" id="tax" v-model="order.tax" @change="$forceUpdate()" />% {{tax|currency}}</div>
+      </div>
+      <hr />
+      <div>
+        <div class="pull-left">Total</div>
+        <div class="subtotal pull-right">{{total|THB}}</div>
+      </div>
+    </div>
+
     <div class="base" :class="{'modal-base': itemsFilter}"></div>
   </div>
 </template>
@@ -104,24 +133,42 @@ export default {
       icons: {
         'icon-edit': require('../../assets/icons/icon_edit.svg'),
         'icon-plus': require('../../assets/icons/icon_plus.svg'),
-      }
+      },
+      order: Vue.util.extend({}, this.$store.state.orders.orders
+          .find(o => o.orderid === this.id))
     }
   },
   computed: {
     ...mapState(['people', 'types', 'statuses']),
-    order: function() {
-      return Vue.util.extend({}, this.$store.state.orders.orders.find(o => o.orderid === this.id))
+    tax () {
+      return (this.order.tax/100) * this.order.lineItems
+        .reduce((p,c) =>  p + c.quantity * c['list price'], 0)
+    },
+    subTotal () {
+      return this.order.lineItems
+        .reduce((p,c) =>  p + c.quantity * c['list price'], 0)
+    },
+    total () {
+      return this.order.lineItems
+          .reduce((p,c) =>  p + c.quantity * c['list price'], 0) +
+          (this.order.tax/100) * this.order.lineItems
+            .reduce((p,c) =>  p + c.quantity * c['list price'], 0) +
+          this.order.shipping -
+          this.order['special discount']
     }
   },
   methods: {
     update () {
-      this.$store.dispatch('UPDATE ORDER', this.order)
+      console.log(this.order)
+      this.$store.dispatch('UPDATE ORDER', Vue.util.extend({}, this.order))
     },
     removeItem (id) {
-      this.order.lineItems = this.order.lineItems.filter(i => i.sku !== id)
+      const idx = this.order.lineItems.indexOf(
+        this.order.lineItems.find((i) => i.sku === id))
+      this.order.lineItems.splice(idx,1)
     },
     toggle (where, node) {
-      const copy = Object.assign({}, this[where])
+      const copy = Vue.util.extend({}, this[where])
       copy[node] = !copy[node]
       Vue.set(this, where, copy)
       console.log(this[where][node])
@@ -139,7 +186,7 @@ export default {
     willRender (lineItem) {
       if(!this.itemsFilter)
         return true
-      const regex = new RegExp(this.itemsFilter)
+      const regex = new RegExp(this.itemsFilter.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"))
       return Object.keys(lineItem).some(k => regex.test(lineItem[k]))
     },
     checkClear (e) {
@@ -160,6 +207,7 @@ export default {
   mounted () {
     const self = this
     this.order.lineItems.forEach(i => self.editableQuantity[i.sku]=false)
+    Vue.set(this.order, 'lineItems', this.order.lineItems)
   }
 }
 </script>
