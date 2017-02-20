@@ -64,6 +64,39 @@ $lined-shadow: 0 -1px 0 0 $shadow;
   margin-bottom: 15px;
 }
 
+.edit-button {
+  cursor: pointer;
+  height: auto;
+  max-width: 19px;
+}
+
+.control.search {
+  max-height: (2px * (64 / 3));
+
+  img, svg {
+    /* TODO -  I'm sure there's a more elegant solution to this, but I'm out of time */
+    margin-left: (((2px * (64 / 3)) - (2px * (64/8)))/2);
+    width: (2px * (64/8));
+    z-index: 1;
+  }
+
+  input {
+    border: 0;
+    border-bottom: solid thin $shadow;
+    font-size: 12px;
+    line-height: 12px;
+    /* TODO -  I'm sure there's a more elegant solution to this, but I'm out of time */
+    margin-left: ((-2px * (64/8)) + (-1*(((2px * (64 / 3)) - (2px * (64/8)))/2)));
+    padding-left: ((2px * (64/8)) + (2*(((2px * (64 / 3)) - (2px * (64/8)))/2)));
+    z-index: 0;
+    width: 100%;
+  }
+}
+
+.clear-search {
+  cursor: pointer;
+}
+
 .order {
   /* TODO - specifications for line heights do not match rendered output.
   Need artist to reposition lines of text properly or give new line-heights.
@@ -144,11 +177,22 @@ li {
   div {
     align-items: center;
     display: flex;
-    width: 12.5%;
+    width: 11.11%;
   }
 
   :nth-child(2) {
-    width: 28.56%;
+    width: 22.22%;
+  }
+
+  .cancel {
+    display:flex;
+    flex-direction: row-reverse;
+
+    a {
+      cursor: pointer;
+      color: $dark-text;
+      text-decoration: underline;
+    }
   }
 }
 
