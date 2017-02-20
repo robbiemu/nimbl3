@@ -25,13 +25,16 @@ export default {
 @include getMontserrat(300);
 
 #app {
-  text-align: center;
+  color: #2c3e50;
+  display:flex;
   font-family: Montserrat;
   font-size: 12px;
-  line-height: 15px;
+  height: 100%;
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  line-height: 15px;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  text-align: center;
 
   .component.routeable {
     margin-top: 15px;

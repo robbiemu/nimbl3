@@ -93,6 +93,7 @@ Order.schema = {
   shipping: Number,
   'special discount': Number,
   tax: Number,
+  remarks: String,
   lineItems: OrderLineItem
 }
 Order['default values'] = (k) => {
@@ -112,11 +113,11 @@ Order['default values'] = (k) => {
         }).split(' ').map(w => properNoun(w)).join(' '):
         lorem({count: getRandomInt(2,4), units: 'words', words: commonThaiNames })
     case 'address':
-      const number = getRandomInt(100,10000)
-      const remainder = properNoun(lorem({
-         count: 2
-       , units: 'words'
-      }))
+    const number = getRandomInt(100,10000)
+    const remainder = properNoun(lorem({
+       count: 2
+     , units: 'words'
+    }))
       return `${number} ${remainder} Thailand`
     case 'telephone':
       let no = []
@@ -145,6 +146,11 @@ Order['default values'] = (k) => {
       return 0
     case 'tax':
       return 7
+    case 'remarks':
+      return properNoun(lorem({
+         count: getRandomInt(4,1)
+       , units: 'paragraphs'
+      }))
     case 'lineItems':
       return [...Array(getRandomInt(1,10))].map(() => new OrderLineItem())
   }

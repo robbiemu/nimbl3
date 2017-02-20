@@ -8,7 +8,10 @@ $highlight-background: #d18ee2;
 
 #nav {
   color: $highlight-background;
+  display: flex;
   font-weight: 600;
+  height: auto;
+  position: relative;
 }
 
 #sidebar,
@@ -17,13 +20,13 @@ $highlight-background: #d18ee2;
   display: none;
 
   &.show {
-    display: flex;
+    display: flex !important; // overriding bootstrap's show for hide-text.less
   }
 }
 
 #sidebar {
   flex-direction: column;
-  min-height: 100vh;
+  flex-grow: 1;
   position: absolute;
   top: 0;
   width: $sidebar-width;

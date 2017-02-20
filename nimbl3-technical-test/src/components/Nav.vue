@@ -1,38 +1,39 @@
 <template>
   <div class="component" id="nav">
-  <nav id="sidebar">
-    <div @click="toggle" class="sidebar-brand"><img :src="logo" /></div>
-    <ul>
-      <router-link v-for="route in Object.keys(activeRoutes)"
-          :to="{ name: properNoun(route) }"
-          tag="li"
-          class="btn"
-          :class="'route-'+route.replace(' ','-')"
-          active-class="active-route"
-          @mouseover.native="highlightedRoutes[route]=true"
-          @mouseleave.native="highlightedRoutes[route]=false">
-        <div class="route-icon-container">
-          <img class="route-icon" :src="routeResources[route].active"
-            v-if="activeRoutes[route] || highlightedRoutes[route]" />
-          <img class="route-icon" :src="routeResources[route].inactive" v-else />
+    <nav id="sidebar">
+      <div @click="toggle" class="sidebar-brand"><img :src="logo" /></div>
+      <ul>
+        <router-link v-for="route in Object.keys(activeRoutes)"
+            :to="{ name: properNoun(route) }"
+            tag="li"
+            class="btn"
+            :class="'route-'+route.replace(' ','-')"
+            active-class="active-route"
+            @mouseover.native="highlightedRoutes[route]=true"
+            @mouseleave.native="highlightedRoutes[route]=false">
+          <div class="route-icon-container">
+            <img class="route-icon" :src="routeResources[route].active"
+              v-if="activeRoutes[route] || highlightedRoutes[route]" />
+            <img class="route-icon" :src="routeResources[route].inactive" v-else />
+          </div>
+          <div class="proper-noun">{{route}}</div>
+        </router-link>
+        <li><!-- TODO - min margin-top setup in scss --></li>
+      </ul>
+      <div id="nav-footer" class="bottom">
+        <!-- the following asset downloaded from the project source does not match the sample
+        <img :src="poweredby" />-->
+        <div class="row">
+          <div class="centered">POWERED BY</div>
         </div>
-        <div class="proper-noun">{{route}}</div>
-      </router-link>
-      <li></li>
-    </ul>
-    <div id="nav-footer" class="bottom">
-      <!-- the following asset downloaded from the project source does not match the sample
-      <img :src="poweredby" />-->
-      <div class="row">
-        <div class="centered">POWERED BY</div>
+        <img :src="logo" />
       </div>
-      <img :src="logo" />
-    </div>
-  </nav>
-  <nav id="overbar" class="nav">
+    </nav>
+    <nav id="overbar" class="nav">
     <div class="navbar-brand" @click="toggle"><img :src="logo" /></div>
     <div class="btn"><big>Nav</big></div>
   </nav>
+  </div>
 </template>
 
 <script>
