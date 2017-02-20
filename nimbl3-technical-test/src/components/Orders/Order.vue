@@ -70,7 +70,7 @@
           <div class="discount">{{lineItem.discount}}</div>
           <div class="quantity">
             <div v-if="editableQuantity[lineItem.sku]">
-              <input class="form-control" type="number" placeholder="1"
+              <input class="form-control editable-quantity" type="number" placeholder="1"
                 v-model="lineItem.quantity"
                 @change.lazy="toggle('editableQuantity', lineItem.sku)" />
             </div>
@@ -87,7 +87,7 @@
       <div class="remarks box">{{order.remarks}}</div>
     </div>
 
-    <div class="floater summary box col-md-3 col-md-offset-8">
+    <div class="summary box col-md-3 col-md-offset-8" @click="toggleFloat($event)" >
       <div class="form-group">
         <label for="delivery">Estimated Delivery Date</label>
 
@@ -95,8 +95,8 @@
 
       </div>
       <hr />
-      <div>
-        <div class="pull-left">Subtotal</div>
+      <div class="form-group">
+        <div class="subtotal-label pull-left">Subtotal</div>
         <div class="subtotal pull-right">{{subTotal|currency}}</div>
       </div>
       <div class="form-group">
@@ -113,8 +113,8 @@
       </div>
       <hr />
       <div>
-        <div class="pull-left">Total</div>
-        <div class="subtotal pull-right">{{total|THB}}</div>
+        <div class="total-label pull-left">Total</div>
+        <div class="total pull-right">{{total|THB}}</div>
       </div>
     </div>
 
@@ -203,6 +203,9 @@ export default {
         return false
       const regex = new RegExp(this.itemsFilter.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"))
       return Object.keys(lineItem).some(k => regex.test(lineItem[k]))
+    },
+    toggleFloat (e) {
+       e.target.classList.toggle('floater')
     },
     checkClear (e) {
       if(this.searchState !== this.searchStates['during'])

@@ -3,6 +3,7 @@ $white: #fff;
 $shadow: #c9c9c9;
 $middle: #89a;
 $base: #f4f7f8;
+$hr: #f1f0f4;
 $dark-text: #626272;
 $highlight-text: #6c5e73;
 $modal-tint: rgba(256 / 3, 256 / 3, 256 / 3, .7);
@@ -99,19 +100,67 @@ li:not(.floater) {
 }
 
 .summary {
+  cursor: pointer;
+  margin-bottom: 20px;
   padding: 15px;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+  font-size: 11px;
+  line-height: 14px;
+  color: $middle;
+  width: 293px;
+  height: 251px;
+
+  &.floater {
+    bottom: 20px;
+    position: fixed;
+    right: 20px;
+  }
+
+  > * {
+  cursor: default;
+  margin: 8px;
+  }
+
+  .subtotal-label,
+  label {
+    color: $dark-text;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 14px;
+  }
+
+  .total-label {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 18px;
+    color: $dark-text;
+  }
+
+  hr {
+    border-bottom: solid thin $hr;
+  }
+
+  .total {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 22px;
+    color: $dark-text;
+  }
 
   > div {
+    align-items: center;
     display: flex;
     justify-content: space-between;
-    align-items: center;
 
     input {
-      max-width: 100px;
+      color: $middle;
+      font-size: 11px;
+      line-height: 14px;
+      height: 28px;
       text-align: center;
+      width: 81px;
+    }
+    input#tax {
+      width: 48px; /* off-spec because of spinners */
     }
 
     div {
@@ -291,4 +340,8 @@ li {
       text-align: left;
     }
   }
+}
+
+.editable-quantity {
+  width: 48px; /* off-spec because of spinner */
 }
