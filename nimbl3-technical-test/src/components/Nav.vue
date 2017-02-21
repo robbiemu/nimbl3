@@ -35,7 +35,7 @@
         <router-link :to="{name: this.$route.name==='Order'?'Orders':'Home'}" tag="img"
           class="nav-icon" :src="icons['arrow-yellow']" />
         <span :class="{order:this.$route.name==='Order'}">{{getRouteName()}}</span>
-        <img class="searchSomething" @click="searchSomething" :src="icons['magnifying-glass']" v-if="this.$route.name==='Order'" />
+        <img class="searchSomething" :src="icons['magnifying-glass']" v-if="this.$route.name==='Order'" />
       </div>
     </nav>
   </div>

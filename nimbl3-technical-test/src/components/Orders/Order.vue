@@ -70,9 +70,20 @@ export default {
         'icon-edit': require('../../assets/icons/icon_edit.svg')
       },
       editableQuantity: {},
-/* making a static copy */
-      order: Vue.util.extend({}, this.$store.state.orders.orders
-          .find(o => o.orderid === this.id))
+/* making a static copy - in practice we would use a clone method on the POJO */
+      order: (() => {
+        const orig = this.$store.state.orders.orders
+          .find(o => o.orderid === this.id)
+        let ord = {}
+        Object.keys(orig).forEach(k => {
+          if(k === 'lineItems'){
+            ord[k] = orig.lineItems.map(i => Object.assign({}, i))
+          } else {
+            ord[k] = orig[k]
+          }
+        })
+        return ord
+      })()
     }
   },
   computed: mapState({
