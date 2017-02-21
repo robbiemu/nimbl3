@@ -1,7 +1,7 @@
 <template>
   <div class="component" id="nav">
     <nav id="sidebar">
-      <div @click="toggle" class="sidebar-brand"><img :src="logo" /></div>
+      <div @click="toggle" class="sidebar-brand"><img class="logo" :src="icons.logo" /></div>
       <ul>
         <router-link v-for="route in Object.keys(activeRoutes)"
             :to="{ name: properNoun(route) }"
@@ -26,13 +26,18 @@
         <div class="row">
           <div class="centered">POWERED BY</div>
         </div>
-        <img :src="logo" />
+        <img :src="icons.logo" />
       </div>
     </nav>
     <nav id="overbar" class="nav">
-    <div class="navbar-brand" @click="toggle"><img :src="logo" /></div>
-    <div class="btn"><big>Nav</big></div>
-  </nav>
+      <div class="navbar-brand" @click="toggle" v-if="this.$route.name==='Home'"><img class="logo" :src="icons.logo" /></div>
+      <div class="navbar-brand" :class="{order:this.$route.name='Order'}" v-else>
+        <router-link :to="{name: this.$route.name==='Order'?'Orders':'Home'}" tag="img"
+          class="nav-icon" :src="icons['arrow-yellow']" />
+        <span :class="{order:this.$route.name==='Order'}">{{getRouteName()}}</span>
+        <img class="searchSomething" @click="searchSomething" :src="icons['magnifying-glass']" v-if="this.$route.name==='Order'" />
+      </div>
+    </nav>
   </div>
 </template>
 
@@ -43,11 +48,17 @@ const highlightedRoutes = Object.assign({}, activeRoutes)
 
 const properNoun = (noun) => noun.charAt(0).toUpperCase() + noun.slice(1)
 
+const mql = []
+
 export default {
   data () {
     return {
       nav: true,
-      logo: require('../assets/icons/logo-white.svg'),
+      icons: {
+        logo: require('../assets/icons/logo-white.svg'),
+        'arrow-yellow': require('../assets/icons/noimage_placeholder.svg'),
+        'magnifying-glass': require('../assets/icons/magnifying-glass.svg')
+      },
       activeRoutes,
       highlightedRoutes,
       /* TODO - the following asset downloaded from the project source does not match the sample
@@ -57,22 +68,24 @@ export default {
   },
   watch: {
     '$route.name': function () {
+      // when the route changes, keep track of it
       Object.keys(this.activeRoutes)
         .map(r => this.activeRoutes[r] = properNoun(r) === this.$route.name ?
             true : false
         )
       if (this.$route.name === 'Order')
-                  this.activeRoutes['orders'] = true
-
+        this.activeRoutes['orders'] = true
     }
-  },
-  updated () {
-    if (this.$route.name === 'Order')
-      document.querySelector('.route-orders').classList
-        .toggle('active-route')
   },
   methods: {
     properNoun,
+    getRouteName () {
+      return (this.$route.name === 'Order') ? this.$route.params.id : this.$route.name
+    },
+    show (which) {
+      document.getElementById(which).classList.add('show')
+      this.nav = which === 'sidebar'
+    },
     /* the follow are methods for navigation slide animation */
     slide (dir) {
       const el = document.getElementById('sidebar')
@@ -92,7 +105,7 @@ export default {
         let component = document.querySelector('.component.routeable')
         if(component)
           component.classList.toggle('nav')
-      }, 250)
+      }, 125)
     },
     slideIn () { this.slide('in') },
     slideOut () { this.slide('out') },
@@ -102,9 +115,53 @@ export default {
       this.nav = !this.nav
     }
   },
+  created() {
+    let self = this
+    mql.push(window.matchMedia('(max-width: 768px)'))
+    mql[0].addListener(function(changed) {
+      if(changed.matches) {
+        if(self.bp !=='small')
+          self.$store.dispatch('nav/setBp', 'small')
+        if(!self.nav)
+          self.slideOut()
+      } else {
+        if(self.bp !=='medium')
+          self.$store.dispatch('nav/setBp', 'medium')
+        if(self.nav)
+          self.slideIn()
+      }
+    })
+    mql.push(window.matchMedia('(min-width: 1024px)'))
+    mql[1].addListener(function(changed) {
+      if(changed.matches) {
+        if(self.bp !=='large')
+          self.$store.dispatch('nav/setBp', 'large')
+        if(self.nav)
+          self.slideIn()
+      } else if(self.bp !=='medium') {
+          self.$store.dispatch('nav/setBp', 'medium')
+      }
+    })
+  },
   mounted () {
-    document.getElementById('sidebar').classList.add('show')
-  }
+    (mql[0].matches)?
+      this.show('overbar') : this.show('sidebar')
+
+    if(mql[0].matches) {
+      this.$store.dispatch('nav/setBp', 'small')
+    } else {
+      if (mql[1].matches) {
+        this.$store.dispatch('nav/setBp', 'large')
+      } else {
+        this.$store.dispatch('nav/setBp', 'medium')
+      }
+    }
+  },
+  updated () {
+    if (this.$route.name === 'Order')
+      document.querySelector('.route-orders').classList
+        .toggle('active-route')
+  },
 }
 </script>
 
@@ -113,7 +170,7 @@ export default {
 
 #sidebar.slide-in {
   animation-name: SlideIn;
-  animation-duration: 0.5s;
+  animation-duration: 0.125s;
   animation-fill-mode: forwards;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;

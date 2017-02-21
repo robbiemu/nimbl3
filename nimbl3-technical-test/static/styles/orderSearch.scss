@@ -1,3 +1,4 @@
+@import './global';
 @import './orderGlobal';
 
 .control.search {
@@ -26,4 +27,8 @@
 
 .clear-search {
   cursor: pointer;
+}
+
+@include bp-small {
+
 }

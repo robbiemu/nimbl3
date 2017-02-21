@@ -15,20 +15,25 @@ const store = new Vuex.Store({
       itemsFilter: undefined,
       sortLineItems: undefined
     },
+    nav: {
+      bp: undefined
+    },
     people, types, statuses
   },
   modules: {products, orders},
   mutations: {
-    muteItemsFilter: (state, payload) =>
-      Vue.set(state.order, 'itemsFilter', payload),
-    sortLineItems: (state, payload) =>
-      Vue.set(state.order, 'sortLineItems', payload)
+    muteItemsFilter: (state, payload) => state.order.itemsFilter = payload,
+    sortLineItems: (state, payload) => state.order.sortLineItems = payload,
+    setBreakPoint: (state, payload) => {console.log('bp at ' +  payload)
+      state.nav.bp = payload}
   },
   actions: {
     'order/itemsFilter':
       ({commit}, payload) => commit('muteItemsFilter', payload),
     'order/sortLineItems':
-      ({commit}, payload) => commit('sortLineItems', payload)
+      ({commit}, payload) => commit('sortLineItems', payload),
+    'nav/setBp': ({commit}, payload) => commit('setBreakPoint', payload)
+
   }
 })
 

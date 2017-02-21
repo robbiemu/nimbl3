@@ -9,9 +9,10 @@
       </div>
 
       <app-order-summary :order="order" />
+      <app-order-estimate :order="order" v-if="bp === 'small'" />
 
       <ul class="line-items box">
-        <app-order-search />
+        <app-order-search v-if="bp !== 'small'" />
 
         <li class="line-item" v-for="(lineItem, index) in order.lineItems"
             :class="{floater: willFloat(lineItem)}"
@@ -41,7 +42,8 @@
       <div class="remarks box">{{order.remarks}}</div>
     </div>
 
-    <app-order-estimate :order="order" />
+    <app-order-estimate :order="order" v-if="bp !== 'small'" />
+    <app-order-search v-else />
 
     <div class="base" :class="{'modal-base': itemsFilter}"></div>
   </div>
@@ -75,7 +77,8 @@ export default {
   },
   computed: mapState({
     itemsFilter: (state) => state.order.itemsFilter,
-    storeSortLineItems: (state) => state.order.sortLineItems
+    storeSortLineItems: (state) => state.order.sortLineItems,
+    bp: (state) => state.nav.bp
   }),
   watch: {
     storeSortLineItems () {

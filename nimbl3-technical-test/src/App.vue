@@ -53,7 +53,37 @@ export default {
       margin-top: $overbar-height + 15px;
     }
   }
+}
 
+@include bp-small {
+  #app {
+    .component.routeable.nav {
+      margin-top: $overbar-height;
+    }
+  }
+  
+  @keyframes ComponentSlideIn {
+    from { margin-left: $sidebar-width + 15px }
+    to   { margin-left: 0px }
+  }
+  @keyframes ComponentSlideOut {
+    from { margin-left: 0px }
+    to   { margin-left: $sidebar-width + 15px  }
+  }
+}
+
+@include bp-medium {
+  @keyframes ComponentSlideIn {
+    from { margin-left: $sidebar-width + 15px }
+    to   { margin-left: 15px }
+  }
+  @keyframes ComponentSlideOut {
+    from { margin-left: 15px }
+    to   { margin-left: $sidebar-width + 15px }
+  }
+}
+
+@include bp-large {
   @keyframes ComponentSlideIn {
     from { margin-left: $sidebar-width + 15px }
     to   { margin-left: 15px }

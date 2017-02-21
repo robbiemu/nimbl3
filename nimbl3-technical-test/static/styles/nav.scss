@@ -6,6 +6,20 @@ $mid-dark-purple: #702283;
 $highlight-foreground: #fff;
 $highlight-background: #d18ee2;
 
+.searchSomething,
+.nav-icon {
+  width: 24px;
+  display: inline-block;
+  margin: 0 15px;
+}
+
+.navbar-brand {
+  height:auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #nav {
   color: $highlight-background;
   display: flex;
@@ -35,6 +49,11 @@ $highlight-background: #d18ee2;
 
   .btn {
     display: flex;
+  }
+
+  .navbar-brand {
+    cursor: pointer;
+    user-select: none;
   }
 
   ul { flex-grow: 1 }
@@ -75,26 +94,37 @@ $highlight-background: #d18ee2;
 }
 
 #overbar {
-  padding-bottom: .5rem;
-  padding-top: .5rem;
   position: fixed;
   top: 0;
   width: 100vw;
+  height: $overbar-height;
   z-index: 1000;
-
-  > * {
-    margin-left: 1rem;
-  }
+  justify-content: center;
 
   .navbar-brand {
     padding: 7.375px 0;
-  }
-}
+    display: flex;
+    flex-grow: 1;
 
-.btn,
-.navbar-brand {
-  cursor: pointer;
-  user-select: none;
+    > img {
+      &:not(.logo) {        
+        width: 17.01px;
+      }
+      cursor: pointer;
+    }
+
+    span {
+      flex-grow: 1;
+      color: $highlight-foreground;
+      font-size: 15px;
+      font-weight: 300;
+
+      &.order::before  {
+        content: 'Edit '
+      }
+    }
+
+  }
 }
 
 .route-icon-container {

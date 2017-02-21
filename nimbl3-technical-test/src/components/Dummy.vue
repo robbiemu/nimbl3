@@ -14,6 +14,7 @@
         <li>autoprefixer matching last 2 and ie >= 10</li>
         <li>use of noimage_placeholder for missing nav</li>
         <li>however, custom svg for search animation since asset not provided</li>
+        <li>and since poweredby image is not ready, rebuilt it in css/html</li>
         <li>Delivery float is dockable</li>
         <li>meaningful dummy data</li>
         <li>proper framework for wiring up to real API</li>

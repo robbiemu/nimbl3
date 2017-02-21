@@ -1,3 +1,4 @@
+@import './global';
 @import './orderGlobal';
 
 #show-order {
@@ -135,4 +136,33 @@ li {
 
 .editable-quantity {
   width: 54px; /* off-spec because of spinner */
+}
+
+@include bp-small {
+  #show-order {
+    margin-right: auto;
+  }
+  #order {
+    flex-wrap: wrap;
+
+    * {
+      min-width: 0;
+    }
+
+    .line-item {
+      .discount, .list-price, .sku {
+        width: 48px;
+      }
+      .quantity {
+        min-width: 120px;
+      }
+      .description {
+        min-width: 200px;
+      }
+    }
+  }
+
+  .breadcrumbs {
+    display: none;
+  }
 }

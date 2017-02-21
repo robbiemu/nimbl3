@@ -1,5 +1,6 @@
 <template>
-  <div id="order-estimate" class="estimate component box floater col-md-3 col-md-offset-8" @click="toggleFloat($event)" >
+  <div id="order-estimate" class="estimate component box col-md-3 col-md-offset-8"
+      :class="{floater: bp !== 'small'}" @click="toggleFloat($event)" >
     <div class="form-group">
       <label for="delivery">Estimated Delivery Date</label>
 
@@ -21,7 +22,7 @@
     </div>
     <div class="form-group">
       <label for="tax">Tax</label>
-      <div><input type="number" class="form-control" id="tax" v-model="order.tax" />% {{tax|currency}}</div>
+      <div><input type="number" class="form-control" id="tax" v-model="order.tax" />%<div></div> {{tax|currency}}</div>
     </div>
     <hr />
     <div>
@@ -32,9 +33,12 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
   props: ['order'],
   computed: {
+    ...mapState({bp: (state) => state.nav.bp}),
     tax () {
       return (this.order.tax/100) * this.order.lineItems
         .reduce((p,c) =>  p + c.quantity * c['list price'], 0)
